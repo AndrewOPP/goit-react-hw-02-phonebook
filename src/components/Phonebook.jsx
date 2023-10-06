@@ -1,55 +1,42 @@
 import { nanoid } from 'nanoid';
 import css from './Phonebook.module.css';
+
 export const Phonebook = ({ onClickAddContact, isNameAlreadyinContacts }) => {
-  let name;
-  let number;
+  const handleSubmit = event => {
+    event.preventDefault();
+    const name = event.currentTarget.elements.name.value;
+    const number = event.currentTarget.elements.phone.value;
+    document.getElementById('mainForm').reset();
+    if (isNameAlreadyinContacts(name)) {
+      return alert(`${name} is already in contacts`);
+    }
+    if (name && number) {
+      onClickAddContact({
+        name: name,
+        number: number,
+        id: nanoid(),
+      });
+    }
+  };
+
   return (
     <>
       <h2>Phonebook</h2>
-      <div>
-        <h4>Name</h4>
-        <input
-          id="nameInput"
-          type="text"
-          name="name"
-          required
-          onChange={evt => {
-            name = evt.currentTarget.value;
-          }}
-        />
-        <h4>Phone</h4>
-        <input
-          id="phoneInput"
-          type="tel"
-          name="phone"
-          required
-          onChange={evt => {
-            number = evt.currentTarget.value;
-          }}
-        />
-        <button
-          className={css.addButton}
-          onClick={() => {
-            if (isNameAlreadyinContacts(name)) {
-              document.getElementById('nameInput').value = '';
-              document.getElementById('phoneInput').value = '';
-              return alert(`${name} is already in contacts`);
-            }
-            if (name && number) {
-              onClickAddContact({
-                name: name,
-                number: number,
-                id: nanoid(),
-              });
-              document.getElementById('nameInput').value = '';
-              document.getElementById('phoneInput').value = '';
-            }
-          }}
-          type="button"
-        >
+      <form id="mainForm" onSubmit={handleSubmit}>
+        <label>
+          <span>Name</span>
+          <input type="text" name="name" required />
+        </label>
+
+        <label>
+          <span>Phone</span>
+          <input type="tel" name="phone" required />
+        </label>
+
+        <button className={css.addButton} type="submit">
           Add contact
         </button>
-      </div>
+      </form>
     </>
   );
 };

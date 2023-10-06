@@ -14,7 +14,7 @@ export const Contacts = ({ contacts, onNameFilter, onDeleteContact }) => {
       <ul>
         {contacts.map(({ id, name, number }) => (
           <li key={id}>
-            {name}: {number}
+           <p>{name}: {number}</p> 
             <button
               className={css.deleteButton}
               onClick={() => onDeleteContact(id)}

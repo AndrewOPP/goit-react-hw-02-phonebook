@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Phonebook } from './Phonebook';
 import { Contacts } from './Contacts';
-
+import css from './App.module.css';
 export class App extends Component {
   state = {
     contacts: [],
@@ -53,7 +53,7 @@ export class App extends Component {
 
   render() {
     return (
-      <div style={{ marginLeft: 70, marginTop: 50 }}>
+      <div className={css.mainDiv}>
         <Phonebook
           isNameAlreadyinContacts={this.isNameAlreadyinContacts}
           onClickAddContact={this.addToContacts}
