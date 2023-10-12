@@ -11,6 +11,7 @@ export const Phonebook = ({ onClickAddContact, isNameAlreadyinContacts }) => {
       return alert(`${name} is already in contacts`);
     }
     if (name && number) {
+      
       onClickAddContact({
         name: name,
         number: number,

@@ -8,8 +8,19 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const localeContacts = localStorage.getItem('contacts');
+    if (localeContacts !== null) {
+      this.setState({
+        contacts: JSON.parse(localeContacts),
+      });
+    }
+  }
+
   addToContacts = contact => {
     this.state.contacts.push(contact);
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    console.log();
     this.setState({
       contacts: this.state.contacts,
     });
@@ -42,9 +53,12 @@ export class App extends Component {
   };
 
   deleteContact = userId => {
+    console.log(userId);
     const rightContacts = this.state.contacts.filter(({ id }) => {
       return id !== userId;
     });
+    console.log(rightContacts);
+    localStorage.setItem('contacts', JSON.stringify(rightContacts));
 
     this.setState({
       contacts: rightContacts,
